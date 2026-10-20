@@ -9,6 +9,8 @@ import minecraft_launcher_lib as mcl  # библиотека для скачив
 # .resolve()         -> делаем путь полным и абсолютным (не зависит от места запуска терминала)
 # .parent            -> берём папку, в которой лежит файл
 BASE_DIR = Path(__file__).resolve().parent
+SHARED_DIR = BASE_DIR / 'shared'  # папка для общих файлов (которые не зависят от сборки)
+
 
 
 def setup_folders():  # готовит каркас лаунчера; параметров нет, потому что набор папок всегда один и тот же
@@ -42,8 +44,12 @@ def show_versions():  # показывает список версий Minecraft
     print(f"Доступные версии Minecraft: {versions[:5]}") # показ всех версий майнкрафта с ограничением в первые 5 версий [:5] (чтобы не засорять вывод)
 
 
+def install_version(mc_version):  # скачивает указанную версию Minecraft в папку shared/versions
+    print(f"Скачиваем версию Minecraft {mc_version} в папку shared/versions...")
+    mcl.install.install_minecraft_version(mc_version, SHARED_DIR)
 
 if __name__ == "__main__":  # выполнять только если файл запущен напрямую (а не подключён как модуль в другом файле)
     setup_folders()  # скобки пустые: в def у этой функции нет параметров
     create_instance("my_instance", "1.21.11")  # два значения: в def два параметра (name, mc_version), порядок важен
-    show_versions()  # показать список версий Minecraft, которые можно скачать
+    # show_versions()  # показать список версий Minecraft, которые можно скачать
+    install_version('1.21.11')  # скачиваем указанную версию Minecraft в папку shared/versions

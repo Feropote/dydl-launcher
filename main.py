@@ -11,7 +11,7 @@ def setup_folders():
     for name in folders_to_create:
         folder_path = BASE_DIR / name
         folder_path.mkdir(parents=True, exist_ok=True)
-        print(f"Папка '{name}' создана в: {folder_path}")
+        # print(f"Папка '{name}' создана в: {folder_path}")
 
 def create_instance(name, mc_version):
     instance_dir = BASE_DIR / 'instances' / name
@@ -19,7 +19,7 @@ def create_instance(name, mc_version):
     config_path = instance_dir / 'instance.json'
 
     if instance_dir.exists():
-        print(f"Сборка '{name}' уже существует: {instance_dir}")
+        # print(f"Сборка '{name}' уже существует: {instance_dir}")
         return
 
     game_dir.mkdir(parents=True, exist_ok=True)
@@ -28,7 +28,7 @@ def create_instance(name, mc_version):
     text = json.dumps(instance_data, indent=2, ensure_ascii=False)
     config_path.write_text(text, encoding='utf-8')
 
-    print(f"Сборка '{name}' создана в: {instance_dir}")
+    # print(f"Сборка '{name}' создана в: {instance_dir}")
 
 def show_versions():
     versions = mcl.utils.get_version_list()
@@ -62,6 +62,7 @@ def list_instances():
     return names
 
 def choice_instance():
+    print("Список сборок: ")
     names = list_instances()
     for number, name in enumerate(names, start=1):
         print(f'{number} {name}')

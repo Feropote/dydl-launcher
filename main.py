@@ -54,11 +54,21 @@ def launch_instance(name):
     command = mcl.command.get_minecraft_command(data['mc_version'],SHARED_DIR, options)
     subprocess.run(command, cwd=game_dir)
 
+def list_instances():
+    names = []
+    for instance_dir in (BASE_DIR / 'instances').iterdir():
+        if (instance_dir / 'instance.json').exists():
+            names.append(instance_dir.name)
+    return names
+
+def choice_instance():
+    names = list_instances()
+    for number, name in enumerate(names, start=1):
+        print(f'{number} {name}')
+    choice = int(input(f'Выберите сборку : '))
+    return names[choice - 1]
 
 if __name__ == "__main__":
     setup_folders()
-    create_instance("my_instance", "1.21.11")
-    data = read_instance("my_instance")
-    # install_version('1.21.11')
-    print(data['mc_version'])
-    launch_instance("my_instance")
+    # create_instance("test1.0", "1.21.11")
+    launch_instance(choice_instance())
